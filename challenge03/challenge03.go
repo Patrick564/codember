@@ -29,34 +29,6 @@ func main() {
 	tmpRes := make([]string, 0)
 
 	for i := 0; i < len(colors); i++ {
-		if i == len(colors)-1 {
-			if len(tmpRes)%2 == 0 {
-				if tmpRes[len(tmpRes)-2] == colors[i] && tmpRes[len(tmpRes)-1] != colors[i] {
-					tmpRes = append(tmpRes, colors[i])
-					result = append(result, tmpRes)
-					continue
-				} else {
-					result = append(result, tmpRes)
-					tmpRes = tmpRes[:0]
-					tmpRes = append(tmpRes, colors[i])
-					result = append(result, tmpRes)
-					continue
-				}
-			} else {
-				if tmpRes[len(tmpRes)-2] == colors[i] && tmpRes[len(tmpRes)-1] != colors[i] {
-					tmpRes = append(tmpRes, colors[i])
-					result = append(result, tmpRes)
-					continue
-				} else {
-					result = append(result, tmpRes)
-					tmpRes = tmpRes[:0]
-					tmpRes = append(tmpRes, colors[i])
-					result = append(result, tmpRes)
-					continue
-				}
-			}
-		}
-
 		// Tmp slice is empty
 		if len(tmpRes) == 0 {
 			tmpRes = append(tmpRes, colors[i])
@@ -67,7 +39,7 @@ func main() {
 		if len(tmpRes) == 1 {
 			if tmpRes[len(tmpRes)-1] == colors[i] {
 				result = append(result, tmpRes)
-				tmpRes = tmpRes[:0]
+				tmpRes = make([]string, 0)
 				tmpRes = append(tmpRes, colors[i])
 				continue
 			} else {
@@ -76,27 +48,21 @@ func main() {
 			}
 		}
 
-		if len(tmpRes)%2 == 0 {
-			if tmpRes[len(tmpRes)-2] == colors[i] && tmpRes[len(tmpRes)-1] != colors[i] {
-				tmpRes = append(tmpRes, colors[i])
-				continue
-			} else {
-				result = append(result, tmpRes)
-				tmpRes = tmpRes[len(tmpRes)-1:]
-				tmpRes = append(tmpRes, colors[i])
-				continue
-			}
-		} else {
-			if tmpRes[len(tmpRes)-2] == colors[i] && tmpRes[len(tmpRes)-1] != colors[i] {
-				tmpRes = append(tmpRes, colors[i])
-				continue
-			} else {
-				result = append(result, tmpRes)
-				tmpRes = tmpRes[len(tmpRes)-1:]
-				tmpRes = append(tmpRes, colors[i])
-				continue
-			}
+		if tmpRes[len(tmpRes)-2] == colors[i] && tmpRes[len(tmpRes)-1] != colors[i] {
+			tmpRes = append(tmpRes, colors[i])
+			continue
 		}
+
+		if tmpRes[len(tmpRes)-1] == colors[i] {
+			result = append(result, tmpRes)
+			tmpRes = make([]string, 0)
+			tmpRes = append(tmpRes, colors[i])
+			continue
+		}
+
+		result = append(result, tmpRes)
+		tmpRes = tmpRes[len(tmpRes)-1:]
+		tmpRes = append(tmpRes, colors[i])
 	}
 
 	sort.Slice(result, func(i, j int) bool {
