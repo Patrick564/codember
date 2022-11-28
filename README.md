@@ -15,4 +15,4 @@ Solutions for <https://codember.dev/> with Go.
 
 1. Clone the project
 2. Move to challenge folder
-3. Run `go run .` inside the challenge folder
+3. Execute `go run .` inside the challenge folder
